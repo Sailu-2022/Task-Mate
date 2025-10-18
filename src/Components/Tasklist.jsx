@@ -1,8 +1,27 @@
+export default function Tasklist({tasks , updateTask, deleteTask}) {
 
-export default function Tasklist() {
+  const toggleComplete = (index)=>{
+        const updatedTask = {...tasks[index], completed: !tasks[index].completed};
+        updateTask(updatedTask, index);
+    }
   return (
-    <div>
-      <h1>Tasklist components</h1>
-    </div>
+    <ul className="task-list">
+      {tasks.map((task, index)=> (
+        <li key={index} className={task.completed ? "completed" : ""}>
+          <div> 
+            <span>{task.text}
+              <small>({task.priority} , {task.category})</small>
+            </span>
+          </div>
+
+          <div>
+            <button onClick={() => toggleComplete(index)}>
+              {task.completed ? "Undo" : "Complete"}</button>
+            <button onClick={() => deleteTask(index)}>Delete</button>
+          </div>
+
+        </li>
+      ))}
+    </ul>
   )
 }
